@@ -21,11 +21,11 @@ App for downloading music with embedded metadata. Requires **only song and artis
     <tr>
       <td align="center">
         <h4>VivaMusic interface</h4>
-        <img src="https://github.com/user-attachments/assets/375d4aba-f257-4516-b0c4-042791044c60" alt="AppLook" width="350" />
+        <img src="Assets/VivaMusicInterface.png" alt="VivaMusicInterface" width="350" />
       </td>
       <td align="center">
         <h4>Downloaded song example</h4>
-        <img src="https://github.com/user-attachments/assets/d4d981e9-1f21-44a2-9a38-1c0a1586a895" alt="DemoPlayer" width="350" />
+        <img src="Assets/SongExample.png" alt="SongExample" width="350" />
       </td>
     </tr>
   </table>
