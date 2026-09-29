@@ -25,7 +25,7 @@ App for downloading music with embedded metadata. Requires **only song and artis
       </td>
       <td align="center">
         <h4>Downloaded song example</h4>
-        <img src="Assets/SongExample.png" alt="SongExample" width="350" />
+        <img src="Assets/SongExample.png" alt="SongExample" width="300" />
       </td>
     </tr>
   </table>
