@@ -1,0 +1,13 @@
+This application uses the following third-party software:
+
+1. yt-dlp
+License: The Unlicense (Public Domain)
+Source code: https://github.com/yt-dlp/yt-dlp
+
+2. FFmpeg (Custom builds provided by yt-dlp)
+License: GNU General Public License v3.0 (GPLv3)
+Source code: https://github.com/yt-dlp/FFmpeg-Builds
+Original FFmpeg project: https://ffmpeg.org/
+
+The FFmpeg binaries are distributed under the GPLv3. 
+A full copy of the GPLv3 license text is provided in the accompanying "LICENSE.txt" file.

@@ -1,0 +1,112 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="using:VivaMusic.Views"
+        xmlns:viewmodels="using:VivaMusic.ViewModels"
+        x:Class="VivaMusic.Views.MainWindow"
+        x:DataType="viewmodels:MainViewModel"
+        Title="VivaMusic" 
+        Width="500" Height="550">
+    
+    <Grid>
+        <!-- Settings Button -->
+        <Button
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Click="OpenSettings"
+            >
+            <PathIcon 
+                Data="{StaticResource SemiIconSetting}"
+                Width="20"
+                Height="20"></PathIcon>
+        </Button>
+
+        <!-- Main UI -->
+        <StackPanel HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    Spacing="20">  
+            <!-- Label/Cover -->
+            <TextBlock 
+                HorizontalAlignment="Center"           
+                FontSize="30">
+                VivaMusic
+            </TextBlock>
+
+            <Border 
+                Width="200" 
+                Height="200" 
+                ClipToBounds="True">
+                <Image Source="{Binding CoverImage}"
+                   Width="200" 
+                   Height="200" 
+                   Stretch="UniformToFill" ></Image> 
+            </Border>
+
+             <!-- Inputs -->
+            <StackPanel HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    Spacing="8">
+                <TextBox Text="{Binding SongName}"
+                         PlaceholderText="Song name" 
+                         Width="350"
+                         Height="35"></TextBox>
+                <TextBox Text="{Binding ArtistName}" 
+                         PlaceholderText="Artist Name" 
+                         Width="350"
+                         Height="35"></TextBox>
+            </StackPanel>  <!-- Inputs -->
+        
+             <!-- Find song button -->
+            <Button Classes="Primary" 
+                    Command="{Binding FindSongCommand}"
+                    IsEnabled="{Binding !IsFinding}"
+                    Width="115"
+                    Height="40"
+                    FontSize="16">Find Song</Button>
+
+            <!-- Download info -->
+            <StackPanel 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center" 
+                Spacing="5">
+                <ProgressBar 
+                    x:Name="DownloadProgressBar"
+                    Opacity="{Binding IsFinding}"
+                    Value="{Binding DownloadProgressValue}"
+                    Minimum="0"
+                    Maximum="100"
+                    Height="8"
+                    Width="350"></ProgressBar>
+                <TextBlock x:Name="ProgressText" 
+                    HorizontalAlignment="Center"
+                    Opacity="{Binding IsFinding}"
+                   Text="{Binding DownloadProgressText}" />
+            </StackPanel> <!-- Download info -->
+        </StackPanel> <!-- Main UI -->
+
+        <!-- Settings Overlay -->
+        <Grid x:Name="SettingsOverlay"
+              Opacity="0"
+              IsHitTestVisible="False"
+              Background="#80000000">
+
+            <Grid.Transitions>
+                <Transitions>
+                    <DoubleTransition
+                        Property="Opacity"
+                        Duration="0:0:0.3">
+                    </DoubleTransition>
+                </Transitions>
+            </Grid.Transitions>
+        
+            <local:SettingsPanel
+                x:Name="SettingsPanel"
+                CloseRequested="SettingsPanel_CloseRequested">
+            </local:SettingsPanel>
+        </Grid>  <!-- Settings Overlay -->
+
+        <TextBlock VerticalAlignment="Bottom"
+                   HorizontalAlignment="Center">
+            © 2026 HardCodeDev
+        </TextBlock>
+   </Grid>
+</Window>

@@ -1,0 +1,72 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewmodels="using:VivaMusic.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="VivaMusic.Views.SettingsOptions"
+             x:DataType="viewmodels:SettingsOptionsViewModel">
+   <StackPanel 
+        Grid.Row="1"
+        HorizontalAlignment="Center"
+        Spacing="28">
+
+       <!-- Download folder -->
+        <Grid 
+              Width="200"
+              Height="100"
+              Margin="0,20,0,-40"> 
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="15"
+                    Margin="0,10,0,0"
+                    >Download Folder</TextBlock>
+
+                <TextBox 
+                    PlaceholderText="Select folder..."
+                    IsReadOnly="True"
+                    Padding="8,6,50,5"
+                    Text="{Binding DownloadFolderPath}"
+                    x:Name="DownloadFolderTextBox">     
+                </TextBox> 
+      
+            <Button
+                Command="{Binding OpenFileDialogCommand}"
+                CommandParameter="{Binding $parent[TopLevel]}"
+                HorizontalAlignment="Right">
+                <PathIcon 
+                Data="{StaticResource SemiIconFolderOpen}"
+                Width="20"
+                Height="20">
+                </PathIcon>
+            </Button>
+        </Grid> <!-- Download folder -->
+  
+       <!-- Download format -->
+        <StackPanel Spacing="5">
+            <TextBlock
+                HorizontalAlignment="Center"
+                FontSize="15"
+                >Download Format</TextBlock>
+            <ComboBox
+                HorizontalAlignment="Stretch"
+                SelectedItem="{Binding SelectedFormat}"
+                ItemsSource="{Binding AvailableFormats}"
+                x:Name="DownloadFormatComboBox">
+            </ComboBox>
+        </StackPanel> <!-- Download format -->
+
+        <!-- Other -->
+        <CheckBox
+            FontSize="17"
+            IsChecked="{Binding SaveExtractedCover}"
+            x:Name="SaveCoverBox">
+            Save Extracted Cover
+        </CheckBox>
+
+
+       <Button
+            Command="{Binding ClearSettingsCommand}">
+           Clear Settings</Button>
+    </StackPanel>
+</UserControl>

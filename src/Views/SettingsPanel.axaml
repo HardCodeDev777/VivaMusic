@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:usercontrols="using:VivaMusic.Views"
+             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="550"
+             x:Class="VivaMusic.Views.SettingsPanel">
+ 
+    <Border
+        Background="#232329"
+        Width="400"
+        Height="450"
+        CornerRadius="10"
+        Opacity="0"
+        x:Name="SettingsBorder">  
+
+        <Border.Transitions>
+            <Transitions>
+                <DoubleTransition
+                    Property="Opacity"
+                    Duration="0:0:0.3">
+                </DoubleTransition>
+
+            </Transitions>
+        </Border.Transitions>
+
+       <Grid>
+            <Button
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Click="CloseSettings"
+                CornerRadius="10">
+                <PathIcon 
+                    Data="{StaticResource SemiIconClose}"
+                    Width="20"
+                    Height="20"></PathIcon>
+            </Button>
+
+            <TextBlock 
+                HorizontalAlignment="Center"
+                FontSize="30"
+                Margin="20">Settings
+            </TextBlock>
+
+          <usercontrols:SettingsOptions 
+              Margin="60">
+          </usercontrols:SettingsOptions>
+       </Grid>
+    </Border>
+</UserControl>
