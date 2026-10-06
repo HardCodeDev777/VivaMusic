@@ -3,8 +3,8 @@ name: Release
 on:
   push:
     tags:
-      - 'v*.*.*'
-  workflow_dispatch:
+      - 'v*'
+  workflow_dispatch: 
 
 permissions:
   contents: write
@@ -12,26 +12,38 @@ permissions:
   attestations: write
 
 jobs:
-
   build:
     runs-on: windows-latest
+    env:
+      APP_VERSION: '1.0.0-dev' 
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Unpack FFmpeg
+        run: .\src\init.ps1
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.0.x'
 
-      - name: Unpack Ffmpeg
-        run: .\src\init.ps1
-        
-      - name: Dotnet publish
-        run: dotnet publish src/VivaMusic.csproj -c Release -r win-x64
+      - name: Extract Version
+        run: |
+          $ref = "${{ github.ref_name }}"
+          if ($ref.StartsWith("v")) {
+              $ver = $ref.Substring(1)
+          } else {
+              $ver = "1.0.0-dev"
+          }
+          echo "APP_VERSION=$ver" >> $env:GITHUB_ENV
+          Write-Host "Set version to: $ver"
 
-      - name: Verify FFmpeg exists before packing
+      - name: Publish .NET 
+        run: dotnet publish src/VivaMusic.csproj -c Release -r win-x64 --self-contained -p:Version=${{ env.APP_VERSION }}
+
+      - name: Verify FFmpeg exists
         run: |
           $ffmpegPath = "src/bin/Release/net10.0/win-x64/publish/External/ffmpeg.exe"
           if (-not (Test-Path $ffmpegPath)) {
@@ -40,25 +52,25 @@ jobs:
           }
 
       - name: Compile setup
-        run: iscc src/setup.iss
+        run: iscc /DMyAppVersion="${{ env.APP_VERSION }}" src/setup.iss
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: release-artifacts
-          path: src/Output/VivaMusic_setup_*.exe
+          path: src/Output/VivaMusic_setup_${{ env.APP_VERSION }}.exe
           if-no-files-found: error
 
       - name: Attest build provenance
         uses: actions/attest-build-provenance@v3
         with:
-          subject-path: src/Output/VivaMusic_setup_*.exe
+          subject-path: "src/Output/VivaMusic_setup_${{ env.APP_VERSION }}.exe"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files:  src/Output/VivaMusic_setup_*.exe
+          files:  src/Output/VivaMusic_setup_${{ env.APP_VERSION }}.exe
           generate_release_notes: true
           prerelease: true
           draft: true
